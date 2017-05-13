@@ -9,6 +9,7 @@ const blue = [0, 0, 255];
 const white = [255, 255, 255];
 const grey = [64, 64, 64];
 const yellow = [255, 255, 0];
+const purple = [153, 51, 255];
 
 var selection = 'none';
 var choice = null;
@@ -39,6 +40,21 @@ const clearScreen = () => {
     black, black, black, black, black, black, black, black,
     black, black, black, black, black, black, black, black,
     black, black, black, black, black, black, black, black,
+  ];
+
+  senseLeds.setPixels(pixels);
+};
+
+const waiting = () => {
+  pixels = [
+    black, black, black, purple, purple, black, black, black,
+    black, black, purple, black, black, purple, black, black,
+    black, black, black, black, black, purple, black, black,
+    black, black, black, black, purple, black, black, black,
+    black, black, black, purple, black, black, black, black,
+    black, black, black, purple, black, black, black, black,
+    black, black, black, black, black, black, black, black,
+    black, black, black, purple, black, black, black, black,
   ];
 
   senseLeds.setPixels(pixels);
@@ -145,14 +161,12 @@ senseJoystick.getJoystick()
   joystick.on('press', (direction) => {
     if (direction === 'click') {
       // User selection
-      console.log('Click ' + selection);
       choice = selection;
-      clearScreen();
+      waiting();
     } else {
       // Continue cycling through
       switch (direction) {
       case 'left':
-        console.log('Left');
         if ((current - 1) < 0) {
           current = 2;
           selectionArray[current]();
@@ -164,7 +178,6 @@ senseJoystick.getJoystick()
         break;
 
       case 'right':
-        console.log('Right');
         if ((current + 1) > 2) {
           current = 0;
           selectionArray[current]();
@@ -175,8 +188,12 @@ senseJoystick.getJoystick()
 
         break;
 
+      case 'down':
+        welcome();
+
+        break;
+
       default:
-        console.log(current);
         selectionArray[current]();
     }
     }
