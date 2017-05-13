@@ -4,7 +4,7 @@ Zach is the Technical Content Lead - Docs
 
 - copy button for code snippits
 - The link for updating the docs for SSH didn't work
-
+- pushing from branch `gp resin docker-setup:master`
 
 ### Etcher
 
