@@ -13,3 +13,6 @@ client.on('message', (topic, message) => {
   console.log(message.toString())
   client.end()
 })
+
+
+console.log(require('os').networkInterfaces());
