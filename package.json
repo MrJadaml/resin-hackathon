@@ -20,5 +20,8 @@
   "bugs": {
     "url": "https://github.com/MrJadaml/resin-hackathon/issues"
   },
-  "homepage": "https://github.com/MrJadaml/resin-hackathon#readme"
+  "homepage": "https://github.com/MrJadaml/resin-hackathon#readme",
+  "dependencies": {
+    "mqtt": "^2.7.1"
+  }
 }
