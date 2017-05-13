@@ -191,7 +191,7 @@ const startJoyStick = () => {
           break;
 
         default:
-          selectionArray[current]();
+          break;
       }
       }
     });
