@@ -1,17 +1,33 @@
 const mqtt = require('mqtt')
 const os = require('os').networkInterfaces()
 const client  = mqtt.connect({ hostname: os.wlan0[0].address })
-
-client.on('connect', () => {
-	console.log('connect', );
-  client.subscribe('presence')
-
-  client.publish('presence', 'Hello mqtt')
+const resin = require('resin-sdk')({
+    apiUrl: "https://api.resin.io/",
 })
 
-client.on('message', (topic, message) => {
-  // buff toString
+resin.token.set('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTkxMDEsInVzZXJuYW1lIjoiZ2hfbXJqYWRhbWwiLCJlbWFpbCI6Im1yamFkYW1sQGdtYWlsLmNvbSIsImNyZWF0ZWRfYXQiOiIyMDE3LTA1LTEzVDE2OjQxOjE0LjI0N1oiLCJmaXJzdF9uYW1lIjoiamFkYW0iLCJsYXN0X25hbWUiOiJsIiwiY29tcGFueSI6IiIsImFjY291bnRfdHlwZSI6InBlcnNvbmFsIiwic29jaWFsX3NlcnZpY2VfYWNjb3VudCI6W3siY3JlYXRlZF9hdCI6IjIwMTctMDUtMTNUMTY6NDE6MTQuMjQ3WiIsImlkIjo1MjUxLCJ1c2VyIjp7Il9fZGVmZXJyZWQiOnsidXJpIjoiL3Jlc2luL3VzZXIoMTkxMDEpIn0sIl9faWQiOjE5MTAxfSwicHJvdmlkZXIiOiJnaXRodWIiLCJyZW1vdGVfaWQiOiI1MDY3NTcxIiwiZGlzcGxheV9uYW1lIjoiTXJKYWRhbWwiLCJfX21ldGFkYXRhIjp7InVyaSI6Ii9yZXNpbi9zb2NpYWxfc2VydmljZV9hY2NvdW50KDUyNTEpIiwidHlwZSI6IiJ9fV0sImhhc19kaXNhYmxlZF9uZXdzbGV0dGVyIjpmYWxzZSwiand0X3NlY3JldCI6IllLUjYyTUNBT0VOSzRZUkdZVEM0TUNFSUdWRkNOWUhPIiwiaGFzUGFzc3dvcmRTZXQiOmZhbHNlLCJuZWVkc1Bhc3N3b3JkUmVzZXQiOmZhbHNlLCJwdWJsaWNfa2V5Ijp0cnVlLCJmZWF0dXJlcyI6W10sImludGVyY29tVXNlck5hbWUiOiJnaF9tcmphZGFtbCIsImludGVyY29tVXNlckhhc2giOiJlMjQyMzU1MzBmYTQ0YTQ3MjdiMjdiNGQwYTMwMWU5NWVjNGQyZTczY2MwY2Q3MzExM2RjOWY2NWIwZmZjZmRhIiwicGVybWlzc2lvbnMiOltdLCJhY3RvciI6MTIxODM3NCwiaWF0IjoxNDk0NzEzODc2LCJleHAiOjE0OTUzMTg2NzZ9.Gk5u3SyQ1w2hU4ZfnYrXqAGvTg8XqRaBb0AHSQ6mFvE')
+  .then(() => {
+    resin.models.device.getAllByApplication(397213)
+      .then(devices => {
+        console.log('Devicesssssssss:', devices);
+      })
+      .catch(err => {
+        console.log(`ERR: ${err}`);
+      });
 
-  console.log(message.toString())
-  client.end()
-})
+    client.on('connect', () => {
+      client.subscribe('presence')
+
+      client.publish('presence', 'Player X online.')
+    })
+
+    client.on('message', (topic, message) => {
+      // buff toString
+
+      console.log(message.toString())
+      client.end()
+    })
+
+    //uuid.local:port
+  });
+
