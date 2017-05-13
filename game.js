@@ -82,7 +82,10 @@ const player2 = 'uuid2';
 const getChoices = () => {
   const choices = ['scissors', 'paper'];
 
-  compareChoices(choices);
+  if (choices.length > 2) {
+
+    compareChoices(choices);
+  }
 };
 
 // show winner/loser
