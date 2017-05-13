@@ -1,0 +1,24 @@
+{
+  "name": "resin-hackathon",
+  "version": "1.0.0",
+  "description": "Rock Paper Scissors",
+  "main": "/src/app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MrJadaml/resin-hackathon.git"
+  },
+  "keywords": [
+    "resin",
+    "rock-paper-scissors"
+  ],
+  "author": "mrjadaml, kosticm, rsstdd",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/MrJadaml/resin-hackathon/issues"
+  },
+  "homepage": "https://github.com/MrJadaml/resin-hackathon#readme"
+}
