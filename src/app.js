@@ -7,9 +7,9 @@ client.on('connect', () => {
   client.publish('presence', 'Hello mqtt')
 })
 
-// client.on('message', (topic, message) => {
-//   // buff toString
-//
-//   console.log(message.toString())
-//   client.end()
-// })
+client.on('message', (topic, message) => {
+  // buff toString
+
+  console.log(message.toString())
+  client.end()
+})
