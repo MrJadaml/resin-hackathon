@@ -1,4 +1,4 @@
-FROM resin/%%RESIN_MACHINE_NAME%%-node:slim
+FROM resin/%%RESIN_MACHINE_NAME%%-node
 
 RUN apt-get update && apt-get install -yq \
     wget &&\
@@ -15,7 +15,7 @@ WORKDIR /usr/src/app
 
 COPY package.json package.json
 
-RUN JOBS=MAX npm install --production --unsafe-perm && npm cache clean && rm -rf /tmp/*
+RUN npm install
 
 COPY . ./
 
