@@ -11,8 +11,8 @@ const grey = [64, 64, 64];
 const yellow = [255, 255, 0];
 const purple = [153, 51, 255];
 
-var selection = 'none';
-var choice = null;
+var selection = 'rock';
+var choice = '';
 var current = -1;
 
 const welcome = () => {
