@@ -11,7 +11,7 @@ const grey = [64, 64, 64];
 const yellow = [255, 255, 0];
 const purple = [153, 51, 255];
 
-var selection = 'rock';
+var weapon = 'rock';
 var choice = '';
 var current = -1;
 
@@ -117,7 +117,7 @@ const scissors = () => {
    blue, black, black, black, black, black, black, blue,
   ];
 
-  selection = 'scissors';
+  weapon = 'scissors';
   senseLeds.setPixels(pixels);
 };
 
@@ -133,7 +133,7 @@ const paper = () => {
    white, white, white, white, white, white, white, white,
   ];
 
-  selection = 'paper';
+  weapon = 'paper';
   senseLeds.setPixels(pixels);
 };
 
@@ -149,11 +149,11 @@ const rock = () => {
    black, black, black, black, black, black, black, black,
   ];
 
-  selection = 'rock';
+  weapon = 'rock';
   senseLeds.setPixels(pixels);
 };
 
-var selectionArray = [rock, paper, scissors];
+var weapons = [rock, paper, scissors];
 
 const startJoyStick = () => {
   // Setup input callbacks
@@ -162,7 +162,7 @@ const startJoyStick = () => {
     joystick.on('press', (direction) => {
       if (direction === 'click') {
         // User selection
-        choice = selection;
+        choice = weapon;
         waiting();
         stopJoystick();
       } else {
@@ -171,10 +171,10 @@ const startJoyStick = () => {
         case 'left':
           if ((current - 1) < 0) {
             current = 2;
-            selectionArray[current]();
+            weapons[current]();
           } else {
             current -= 1;
-            selectionArray[current]();
+            weapons[current]();
           }
 
           break;
@@ -182,10 +182,10 @@ const startJoyStick = () => {
         case 'right':
           if ((current + 1) > 2) {
             current = 0;
-            selectionArray[current]();
+            weapons[current]();
           } else {
             current += 1;
-            selectionArray[current]();
+            weapons[current]();
           }
 
           break;
