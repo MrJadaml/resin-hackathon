@@ -13,7 +13,7 @@ const purple = [153, 51, 255];
 
 var selection = 'none';
 var choice = null;
-var current = 0;
+var current = -1;
 
 const welcome = () => {
   pixels = [
@@ -155,47 +155,61 @@ const rock = () => {
 
 var selectionArray = [rock, paper, scissors];
 
-// Setup input callbacks
-senseJoystick.getJoystick()
-.then((joystick) => {
-  joystick.on('press', (direction) => {
-    if (direction === 'click') {
-      // User selection
-      choice = selection;
-      waiting();
-    } else {
-      // Continue cycling through
-      switch (direction) {
-      case 'left':
-        if ((current - 1) < 0) {
-          current = 2;
+const startJoyStick = () => {
+  // Setup input callbacks
+  senseJoystick.getJoystick()
+  .then((joystick) => {
+    joystick.on('press', (direction) => {
+      if (direction === 'click') {
+        // User selection
+        choice = selection;
+        waiting();
+        stopJoystick();
+      } else {
+        // Continue cycling through
+        switch (direction) {
+        case 'left':
+          if ((current - 1) < 0) {
+            current = 2;
+            selectionArray[current]();
+          } else {
+            current -= 1;
+            selectionArray[current]();
+          }
+
+          break;
+
+        case 'right':
+          if ((current + 1) > 2) {
+            current = 0;
+            selectionArray[current]();
+          } else {
+            current += 1;
+            selectionArray[current]();
+          }
+
+          break;
+
+        default:
           selectionArray[current]();
-        } else {
-          current -= 1;
-          selectionArray[current]();
-        }
-
-        break;
-
-      case 'right':
-        if ((current + 1) > 2) {
-          current = 0;
-          selectionArray[current]();
-        } else {
-          current += 1;
-          selectionArray[current]();
-        }
-
-        break;
-
-      case 'down':
-        welcome();
-
-        break;
-
-      default:
-        selectionArray[current]();
-    }
-    }
+      }
+      }
+    });
   });
-});
+};
+
+const stopJoystick = () => {
+  // User has selected choice, wait for results
+  senseJoystick.getJoystick()
+  .then((joystick) => {
+    joystick.on('press', (direction) => {
+      waiting();
+    });
+  });
+};
+
+const init = () => {
+  clearScreen();
+  welcome();
+  startJoyStick();
+};
