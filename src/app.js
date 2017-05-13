@@ -1,5 +1,5 @@
 const mqtt = require('mqtt')
-const client  = mqtt.connect('192.168.86.197')
+const client  = mqtt.connect('127.0.0.1')
 
 client.on('connect', () => {
   client.subscribe('presence')
