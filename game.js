@@ -7,14 +7,11 @@ const rock = {img: []};
 const paper =  {img: []};
 const scissors = {img: []};
 const outcomes = [
-  rock: { scissors: true, paper: false, },
-  scissors: { paper: true, rock: false, },
-  paper: { rock: true, scissors: false, }
+  {rock: { scissors: true, paper: false, }},
+  {scissors: { paper: true, rock: false, }},
+  {paper: { rock: true, scissors: false, }}
 ];
-const winColor = [0, 102, 0];
-const loseColor = [255, 255, 255];
-const tieColor = [255, 255, 0];
-const waitColor = []
+
 
 const mqtt = require('mqtt')
 const client  = mqtt.connect('mqtt://test.mosquitto.org')
@@ -44,35 +41,85 @@ const clearScreen = () => {
   senseLeds.setPixels(pixels);
 };
 
+// const lossScreen = () => {
+//   pixels = [
+//     red, red, red, red, red, red, red, red,
+//     red, red, red, red, red, red, red, red,
+//     red, red, red, red, red, red, red, red,
+//     red, red, red, red, red, red, red, red,
+//     red, red, red, red, red, red, red, red,
+//     red, red, red, red, red, red, red, red,
+//     red, red, red, red, red, red, red, red,
+//     red, red, red, red, red, red, red, red
+//   ];
+//
+//   senseLeds.setPixels(pixels);
+// };
+//
+// const winScreen = () => {
+//   pixels = [
+//     green, green, green, green, green, green, green, green,
+//     green, green, green, green, green, green, green, green,
+//     green, green, green, green, green, green, green, green,
+//     green, green, green, green, green, green, green, green,
+//     green, green, green, green, green, green, green, green,
+//     green, green, green, green, green, green, green, green,
+//     green, green, green, green, green, green, green, green,
+//     green, green, green, green, green, green, green, green
+//   ];
+//
+//   senseLeds.setPixels(pixels);
+// };
+
 // ---------------------------------------------------
 // Game
 // ---------------------------------------------------
 
-// hasPlayers
-// assumes some sort of sub confirmation for p1 & p2
-if (player1 && player2) {
-  getChoices();
-}
+const player1 = 'uuid1';
+const player2 = 'uuid2';
 
 // get choices for players
 const getChoices = () => {
-  const choices = [];
-
-  player1Choice = choices[0]
-  player1Choice = choices[1]
+  const choices = ['scissors', 'paper'];
 
   compareChoices(choices);
-}
-
-// compare choices
-// Returns the case where player1 is the
-const compareChoices = (choices) => {
-  const winner = outcomes.filter((index) => index[`${choices[0]}`]);
-
-}
+};
 
 // show winner/loser
-showResult() {
+// winner = player1 or player2
+const showResult = (winner) => {
+  if (winner === player1) {
+    console.log('player1 is the winner. Show them.');
 
- clearScreen();
+    winScreen();
+  } else if (winner === player2) {
+    console.log('player2 is the winner. Show them.');
+  } else if (winner === 'tie') {
+    console.log('there is a tie');
+  }
+
+  // clearScreen();
+};
+
+// Compare choices
+// compares against player1
+const compareChoices = (choices) => {
+  let winner;
+  const p1Choice = choices[0];
+  const p2Choice = choices[1];
+  const p1Outcomes = outcomes.filter((index) => index[`${choices[0]}`]);
+  const isWinnerP1 = p1Outcomes[0][`${p1Choice}`][`${p2Choice}`];
+
+ if (isWinnerP1 === 'tie') {
+    winner = 'tie';
+    showResult(winner);
+  }
+
+  isWinnerP1 ? winner = player1 : winner = player2;
+
+  showResult(winner);
+};
+
+if (player1 && player2) {
+  getChoices();
 }

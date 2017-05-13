@@ -3,6 +3,7 @@ const os = require('os').networkInterfaces()
 const client  = mqtt.connect({ hostname: os.wlan0[0].address })
 
 client.on('connect', () => {
+	console.log('connect', );
   client.subscribe('presence')
 
   client.publish('presence', 'Hello mqtt')
