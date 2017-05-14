@@ -1,4 +1,3 @@
-const senseJoystick = require('sense-joystick');
 const senseLeds = require('sense-hat-led');
 
 const black = [0, 0, 0];
