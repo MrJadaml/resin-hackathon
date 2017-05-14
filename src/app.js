@@ -5,7 +5,7 @@ const resin = require('resin-sdk')({
   apiUrl: "https://api.resin.io/",
 })
 
-const client  = mqtt.connect({ hostname: os.wlan0[0].address })
+const client  = mqtt.connect({ hostname: os.wlan0[0].address });  // destructure wlan0 ??
 const game = new RPS();
 
 //uuid.local:port
