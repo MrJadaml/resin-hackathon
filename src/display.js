@@ -1,6 +1,5 @@
 const senseJoystick = require('sense-joystick');
 const senseLeds = require('sense-hat-led');
-const _ = require('lodash');
 
 const black = [0, 0, 0];
 const red = [255, 0, 0];
@@ -11,205 +10,144 @@ const grey = [64, 64, 64];
 const yellow = [255, 255, 0];
 const purple = [153, 51, 255];
 
-var weapon = 'rock';
-var choice = '';
-var current = -1;
+const screen = {
+  welcome: () => {
+    pixels = [
+     black, black, yellow, yellow, yellow, yellow, black, black,
+     black, yellow, black, black, black, black, yellow, black,
+     yellow, black, blue, black, black, blue, black, yellow,
+     yellow, black, black, black, black, black, black, yellow,
+     yellow, black, red, black, black, red, black, yellow,
+     yellow, black, black, red, red, black, black, yellow,
+     black, yellow, black, black, black, black, yellow, black,
+     black, black, yellow, yellow, yellow, yellow, black, black,
+    ];
 
-const welcome = () => {
-  pixels = [
-   black, black, yellow, yellow, yellow, yellow, black, black,
-   black, yellow, black, black, black, black, yellow, black,
-   yellow, black, blue, black, black, blue, black, yellow,
-   yellow, black, black, black, black, black, black, yellow,
-   yellow, black, red, black, black, red, black, yellow,
-   yellow, black, black, red, red, black, black, yellow,
-   black, yellow, black, black, black, black, yellow, black,
-   black, black, yellow, yellow, yellow, yellow, black, black,
-  ];
+    senseLeds.setPixels(pixels);
+  },
 
-  senseLeds.setPixels(pixels);
-};
+  clear: () => {
+    pixels = [
+      black, black, black, black, black, black, black, black,
+      black, black, black, black, black, black, black, black,
+      black, black, black, black, black, black, black, black,
+      black, black, black, black, black, black, black, black,
+      black, black, black, black, black, black, black, black,
+      black, black, black, black, black, black, black, black,
+      black, black, black, black, black, black, black, black,
+      black, black, black, black, black, black, black, black,
+    ];
 
-const clearScreen = () => {
-  pixels = [
-    black, black, black, black, black, black, black, black,
-    black, black, black, black, black, black, black, black,
-    black, black, black, black, black, black, black, black,
-    black, black, black, black, black, black, black, black,
-    black, black, black, black, black, black, black, black,
-    black, black, black, black, black, black, black, black,
-    black, black, black, black, black, black, black, black,
-    black, black, black, black, black, black, black, black,
-  ];
+    senseLeds.setPixels(pixels);
+  },
 
-  senseLeds.setPixels(pixels);
-};
+  waiting: () => {
+    pixels = [
+      black, black, black, purple, purple, black, black, black,
+      black, black, purple, black, black, purple, black, black,
+      black, black, black, black, black, purple, black, black,
+      black, black, black, black, purple, black, black, black,
+      black, black, black, purple, black, black, black, black,
+      black, black, black, purple, black, black, black, black,
+      black, black, black, black, black, black, black, black,
+      black, black, black, purple, black, black, black, black,
+    ];
 
-const waiting = () => {
-  pixels = [
-    black, black, black, purple, purple, black, black, black,
-    black, black, purple, black, black, purple, black, black,
-    black, black, black, black, black, purple, black, black,
-    black, black, black, black, purple, black, black, black,
-    black, black, black, purple, black, black, black, black,
-    black, black, black, purple, black, black, black, black,
-    black, black, black, black, black, black, black, black,
-    black, black, black, purple, black, black, black, black,
-  ];
+    senseLeds.setPixels(pixels);
+  },
 
-  senseLeds.setPixels(pixels);
-};
+  draw: () => {
+    pixels = [
+     black, black, black, black, black, black, black, black,
+     yellow, yellow, yellow, yellow, yellow, yellow, yellow, yellow,
+     yellow, yellow, yellow, yellow, yellow, yellow, yellow, yellow,
+     black, black, black, black, black, black, black, black,
+     black, black, black, black, black, black, black, black,
+     yellow, yellow, yellow, yellow, yellow, yellow, yellow, yellow,
+     yellow, yellow, yellow, yellow, yellow, yellow, yellow, yellow,
+     black, black, black, black, black, black, black, black,
+    ];
 
-const draw = () => {
-  pixels = [
-   black, black, black, black, black, black, black, black,
-   yellow, yellow, yellow, yellow, yellow, yellow, yellow, yellow,
-   yellow, yellow, yellow, yellow, yellow, yellow, yellow, yellow,
-   black, black, black, black, black, black, black, black,
-   black, black, black, black, black, black, black, black,
-   yellow, yellow, yellow, yellow, yellow, yellow, yellow, yellow,
-   yellow, yellow, yellow, yellow, yellow, yellow, yellow, yellow,
-   black, black, black, black, black, black, black, black,
-  ];
+    senseLeds.setPixels(pixels);
+  },
 
-  senseLeds.setPixels(pixels);
-};
+  lose: () => {
+    pixels = [
+     red, black, black, black, black, black, black, red,
+     black, red, black, black, black, black, red, black,
+     black, black, red, black, black, red, black, black,
+     black, black, black, red, red, black, black, black,
+     black, black, black, red, red, black, black, black,
+     black, black, red, black, black, red, black, black,
+     black, red, black, black, black, black, red, black,
+     red, black, black, black, black, black, black, red,
+    ];
 
-const lose = () => {
-  pixels = [
-   red, black, black, black, black, black, black, red,
-   black, red, black, black, black, black, red, black,
-   black, black, red, black, black, red, black, black,
-   black, black, black, red, red, black, black, black,
-   black, black, black, red, red, black, black, black,
-   black, black, red, black, black, red, black, black,
-   black, red, black, black, black, black, red, black,
-   red, black, black, black, black, black, black, red,
-  ];
+    senseLeds.setPixels(pixels);
+  },
 
-  senseLeds.setPixels(pixels);
-};
+  win: () => {
+    pixels = [
+      black, black, black, black, black, black, black, black,
+      black, black, black, black, black, black, black, green,
+      black, black, black, black, black, black, green, green,
+      black, black, black, black, black, green, green, black,
+      green, black, black, black, green, green, black, black,
+      green, green, black, green, green, black, black, black,
+      black, green, green, green, black, black, black, black,
+      black, black, green, black, black, black, black, black,
+    ];
 
-const win = () => {
-  pixels = [
-    black, black, black, black, black, black, black, black,
-    black, black, black, black, black, black, black, green,
-    black, black, black, black, black, black, green, green,
-    black, black, black, black, black, green, green, black,
-    green, black, black, black, green, green, black, black,
-    green, green, black, green, green, black, black, black,
-    black, green, green, green, black, black, black, black,
-    black, black, green, black, black, black, black, black,
-  ];
+    senseLeds.setPixels(pixels);
+  },
 
-  senseLeds.setPixels(pixels);
-};
+  scissors: () => {
+    pixels = [
+     blue, blue, blue, black, black, blue, blue, blue,
+     blue, black, blue, black, black, blue, black, blue,
+     blue, blue, blue, black, black, blue, blue, blue,
+     black, black, black, blue, blue, black, black, black,
+     black, black, black, blue, blue, black, black, black,
+     black, black, blue, black, black, blue, black, black,
+     black, blue, black, black, black, black, blue, black,
+     blue, black, black, black, black, black, black, blue,
+    ];
 
-const scissors = () => {
-  pixels = [
-   blue, blue, blue, black, black, blue, blue, blue,
-   blue, black, blue, black, black, blue, black, blue,
-   blue, blue, blue, black, black, blue, blue, blue,
-   black, black, black, blue, blue, black, black, black,
-   black, black, black, blue, blue, black, black, black,
-   black, black, blue, black, black, blue, black, black,
-   black, blue, black, black, black, black, blue, black,
-   blue, black, black, black, black, black, black, blue,
-  ];
+    senseLeds.setPixels(pixels);
+  },
 
-  weapon = 'scissors';
-  senseLeds.setPixels(pixels);
-};
+  paper: () => {
+    pixels = [
+     black, black, white, white, white, white, white, white,
+     black, white, black, black, black, black, black, white,
+     white, black, black, black, black, black, black, white,
+     white, black, black, black, black, black, black, white,
+     white, black, black, black, black, black, black, white,
+     white, black, black, black, black, black, black, white,
+     white, black, black, black, black, black, black, white,
+     white, white, white, white, white, white, white, white,
+    ];
 
-const paper = () => {
-  pixels = [
-   black, black, white, white, white, white, white, white,
-   black, white, black, black, black, black, black, white,
-   white, black, black, black, black, black, black, white,
-   white, black, black, black, black, black, black, white,
-   white, black, black, black, black, black, black, white,
-   white, black, black, black, black, black, black, white,
-   white, black, black, black, black, black, black, white,
-   white, white, white, white, white, white, white, white,
-  ];
+    senseLeds.setPixels(pixels);
+  },
 
-  weapon = 'paper';
-  senseLeds.setPixels(pixels);
-};
+  rock: () => {
+    pixels = [
+     black, black, black, black, black, black, black, black,
+     black, black, grey, grey, grey, grey, black, black,
+     black, grey, grey, white, white, white, grey, black,
+     grey, grey, grey, grey, grey, grey, grey, grey,
+     grey, grey, grey, grey, grey, grey, grey, grey,
+     black, grey, grey, grey, grey, grey, grey, black,
+     black, black, grey, grey, grey, grey, black, black,
+     black, black, black, black, black, black, black, black,
+    ];
 
-const rock = () => {
-  pixels = [
-   black, black, black, black, black, black, black, black,
-   black, black, grey, grey, grey, grey, black, black,
-   black, grey, grey, white, white, white, grey, black,
-   grey, grey, grey, grey, grey, grey, grey, grey,
-   grey, grey, grey, grey, grey, grey, grey, grey,
-   black, grey, grey, grey, grey, grey, grey, black,
-   black, black, grey, grey, grey, grey, black, black,
-   black, black, black, black, black, black, black, black,
-  ];
+    senseLeds.setPixels(pixels);
+  },
 
-  weapon = 'rock';
-  senseLeds.setPixels(pixels);
-};
+  stopJoystick: () => {
+  },
+}
 
-var weapons = [rock, paper, scissors];
-
-const startJoyStick = () => {
-  // Setup input callbacks
-  senseJoystick.getJoystick()
-  .then((joystick) => {
-    joystick.on('press', (direction) => {
-      if (direction === 'click') {
-        // User selection
-        choice = weapon;
-        waiting();
-        stopJoystick();
-      } else {
-        // Continue cycling through
-        switch (direction) {
-        case 'left':
-          if ((current - 1) < 0) {
-            current = 2;
-            weapons[current]();
-          } else {
-            current -= 1;
-            weapons[current]();
-          }
-
-          break;
-
-        case 'right':
-          if ((current + 1) > 2) {
-            current = 0;
-            weapons[current]();
-          } else {
-            current += 1;
-            weapons[current]();
-          }
-
-          break;
-
-        default:
-          break;
-      }
-      }
-    });
-  });
-};
-
-const stopJoystick = () => {
-  // User has selected choice, wait for results
-  senseJoystick.getJoystick()
-  .then((joystick) => {
-    joystick.on('press', (direction) => {
-      waiting();
-    });
-  });
-};
-
-const init = () => {
-  clearScreen();
-  welcome();
-  startJoyStick();
-};
+module.exports = { screen };
