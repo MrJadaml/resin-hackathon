@@ -14,10 +14,8 @@ resin.token.set('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTkxMDEsInVzZXJuYW
   .then(() => {
     resin.models.device.getAllByApplication(397213)
       .then(devices => {
-//console.log('Devicesssssssss:', devices);
-
-        game.addPlayer(devices[0])
-        game.addPlayer(devices[1])
+        game.addPlayer(devices[0]);
+        game.addPlayer(devices[1]);
       })
       .catch(err => {
         console.log(`ERR: ${err}`);
@@ -26,15 +24,13 @@ resin.token.set('eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6MTkxMDEsInVzZXJuYW
 
 
 client.on('connect', () => {
-  client.subscribe('init')
-  client.publish('init', `Player online.`)
-})
+  client.subscribe('init');
+  client.publish('init', `Player online.`);
+});
 
 client.on('message', (topic, message) => {
   console.log(message.toString());
 
   game[topic](message);
-  client.end()
-})
-
-
+  client.end();
+});

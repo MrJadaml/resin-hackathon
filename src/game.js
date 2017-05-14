@@ -11,9 +11,9 @@ const paper = screen.paper;
 const scissors = screen.scissors;
 
 const outcomes = [
-  {rock: { scissors: true, paper: false, }},
-  {scissors: { paper: true, rock: false, }},
-  {paper: { rock: true, scissors: false, }}
+  { rock: { scissors: true, paper: false, } },
+  { scissors: { paper: true, rock: false, } },
+  { paper: { rock: true, scissors: false, } },
 ];
 
 const player1 = 'uuid1';
@@ -22,11 +22,15 @@ const weapon = 'rock';
 let current = -1;
 let weapons = [screen.rock, screen.paper, screen.scissors];
 
-const game = {
+const api = {
   init: () => {
     sceen.clear();
     screen.welcome();
     this.startJoyStick();
+  },
+
+  submitChoice: () => {
+    
   },
 
   getChoices:  () => {
@@ -38,11 +42,12 @@ const game = {
   },
 
   startJoyStick: () => {
-    senseJoystick.getJoystick().then(joystick => {
-      joystick.on('press', (direction) => {
+    senseJoystick.getJoystick().then( joystick => {
+      joystick.on('press', direction => {
         if (direction === 'click') {
-          choice = weapon;
-          waiting();
+          client.publish('compareChoices', weapon);
+
+          screen.waiting();
           stopJoystick();
         } else {
           switch (direction) {
@@ -114,4 +119,4 @@ const game = {
   }
 }
 
-game.init();
+module.exports = { api }
