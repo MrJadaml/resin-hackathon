@@ -11,9 +11,15 @@ const paper = screen.paper;
 const scissors = screen.scissors;
 
 const outcomes = [
+<<<<<<< HEAD
   { rock: { scissors: true, paper: false, } },
   { scissors: { paper: true, rock: false, } },
   { paper: { rock: true, scissors: false, } },
+=======
+  {rock: { scissors: true, paper: false, }},
+  {scissors: { paper: true, rock: false, }},
+  {paper: { rock: true, scissors: false, }}
+>>>>>>> game logic clean up
 ];
 
 const player1 = 'uuid1';
@@ -22,17 +28,24 @@ const weapon = 'rock';
 let current = -1;
 let weapons = [screen.rock, screen.paper, screen.scissors];
 
+<<<<<<< HEAD
 const api = {
+=======
+const game = {
+>>>>>>> game logic clean up
   init: () => {
     sceen.clear();
     screen.welcome();
     this.startJoyStick();
   },
 
+<<<<<<< HEAD
   submitChoice: () => {
     
   },
 
+=======
+>>>>>>> game logic clean up
   getChoices:  () => {
     const choices = ['scissors', 'paper'];
 
@@ -42,12 +55,20 @@ const api = {
   },
 
   startJoyStick: () => {
+<<<<<<< HEAD
     senseJoystick.getJoystick().then( joystick => {
       joystick.on('press', direction => {
         if (direction === 'click') {
           client.publish('compareChoices', weapon);
 
           screen.waiting();
+=======
+    senseJoystick.getJoystick().then(joystick => {
+      joystick.on('press', (direction) => {
+        if (direction === 'click') {
+          choice = weapon;
+          waiting();
+>>>>>>> game logic clean up
           stopJoystick();
         } else {
           switch (direction) {
@@ -119,4 +140,8 @@ const api = {
   }
 }
 
+<<<<<<< HEAD
 module.exports = { api }
+=======
+game.init();
+>>>>>>> game logic clean up
